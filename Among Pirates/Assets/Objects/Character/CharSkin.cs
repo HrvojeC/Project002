@@ -1,34 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //[ExecuteInEditMode]
 public class CharSkin : MonoBehaviour
 {
+    [Header("Core Settings")]
     private Vector3 minScale = new Vector3(0.5f, 0.5f, 0.8f);    //Ovo može biti u settingsima ili glavnim game varijablama
     private Vector3 maxScale = new Vector3(1.0f, 1.0f, 1.0f);    //Ovo može biti u settingsima ili glavnim game varijablama
+
+    [Header("ScriptSetup")]
     public GameObject[] myChar;
+    public PlayerProfileSettings pps;
 
-    [Range (0,1.0f)]
-    public float bodyScaleX = 0.5f;
-
-    [Range(0, 1.0f)]
-    public float bodyScaleY = 0.5f;
-
-    [Range(0, 1.0f)]
-    public float bodyScaleZ = 0.5f;
 
     public Material matCharacter;
 
-    
-    Vector3 GetScaleFromValues()
+    public void ResetSkinMaterial(Material matC)
     {
-        float xa = minScale.x + (maxScale.x - minScale.x) * bodyScaleX;
-        float ya = minScale.y + (maxScale.y - minScale.y) * bodyScaleY;
-        float za = minScale.z + (maxScale.z - minScale.z) * bodyScaleZ;
-        transform.Find("Pelvis/Body").localScale = new Vector3(xa, ya, za);
+        matCharacter = matC;
+        if (myChar[0]) foreach (GameObject a in myChar) a.GetComponent<MeshRenderer>().material = matCharacter;
+    }
 
-        //bodyScaleX = (transform.Find("Pelvis/Body").localScale.x - minScale.x) / (maxScale.x - minScale.x);
+    public void ResetTransformSize(float bsX, float bsY, float bsZ)
+    {
+        pps.bodyScaleX = bsX;
+        pps.bodyScaleY = bsY;
+        pps.bodyScaleZ = bsZ;
+        float xa = minScale.x + (maxScale.x - minScale.x) * pps.bodyScaleX;
+        float ya = minScale.y + (maxScale.y - minScale.y) * pps.bodyScaleY;
+        float za = minScale.z + (maxScale.z - minScale.z) * pps.bodyScaleZ;
+        transform.Find("Pelvis/Body").localScale = new Vector3(xa, ya, za);
+    }
+    
+    public Vector3 GetScaleFromValues()
+    {
+        float xa = minScale.x + (maxScale.x - minScale.x) * pps.bodyScaleX;
+        float ya = minScale.y + (maxScale.y - minScale.y) * pps.bodyScaleY;
+        float za = minScale.z + (maxScale.z - minScale.z) * pps.bodyScaleZ;
 
         return new Vector3(xa, ya, za);
     }
@@ -37,9 +44,9 @@ public class CharSkin : MonoBehaviour
 
     void Reset()
     {
-        bodyScaleX = (transform.Find("Pelvis/Body").localScale.x - minScale.x) / (maxScale.x - minScale.x);
-        bodyScaleY = (transform.Find("Pelvis/Body").localScale.y - minScale.y) / (maxScale.y - minScale.y);
-        bodyScaleZ = (transform.Find("Pelvis/Body").localScale.z - minScale.z) / (maxScale.z - minScale.z);
+        pps.bodyScaleX = (transform.Find("Pelvis/Body").localScale.x - minScale.x) / (maxScale.x - minScale.x);
+        pps.bodyScaleY = (transform.Find("Pelvis/Body").localScale.y - minScale.y) / (maxScale.y - minScale.y);
+        pps.bodyScaleZ = (transform.Find("Pelvis/Body").localScale.z - minScale.z) / (maxScale.z - minScale.z);
     }
 
     void OnValidate()

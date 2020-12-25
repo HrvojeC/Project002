@@ -25,6 +25,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         MovePlayerAndCamera();
+        Testing();
     }
 
     private void MovePlayerAndCamera()
@@ -44,6 +45,11 @@ public class PlayerMovement : NetworkBehaviour
         animator.SetBool("Walking", movem != 0);
 
         CameraObj.position = transform.position;
-        CameraObj.eulerAngles = Vector3.Lerp(CameraObj.eulerAngles, transform.eulerAngles, interpolation);
+        CameraObj.eulerAngles = transform.eulerAngles; // Vector3.Lerp(CameraObj.eulerAngles, transform.eulerAngles, interpolation);
+    }
+
+    private void Testing ()
+    {
+
     }
 }
