@@ -29,7 +29,7 @@ Transform:
   m_Children:
   - {fileID: 7270589595588811399}
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449273979031258097
 GameObject:
@@ -579,6 +579,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.9}
   m_Children:
+  - {fileID: 5385659780529181782}
   - {fileID: 3978836653032908241}
   - {fileID: 5491591418445371100}
   - {fileID: 1880428436319755326}
@@ -862,8 +863,89 @@ Transform:
   m_Children:
   - {fileID: 2144268524686469043}
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5136909153006818882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5385659780529181782}
+  - component: {fileID: 2138882670033453194}
+  - component: {fileID: 2822611285526708789}
+  m_Layer: 0
+  m_Name: BagOfGold
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5385659780529181782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136909153006818882}
+  m_LocalRotation: {x: 0.11906298, y: -0.4537095, z: -0.5459327, w: 0.69421124}
+  m_LocalPosition: {x: 0.13333334, y: 0.148, z: 0.254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8756252899133876331}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -19.274, y: -53.616, z: -66.555}
+--- !u!33 &2138882670033453194
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136909153006818882}
+  m_Mesh: {fileID: 6210857044248776090, guid: 79adb7e30bc2cfe479366a3bbd4eedd0, type: 3}
+--- !u!23 &2822611285526708789
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136909153006818882}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 661404025131fa545a013cbc0d006bfe, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5496301872103262793
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +1059,7 @@ Transform:
   m_Children:
   - {fileID: 5767793540417568830}
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1846711746435034114
 MeshFilter:
@@ -1058,7 +1140,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3131690705095252546
 MeshFilter:
@@ -1139,7 +1221,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3515642370490288526
 MeshFilter:
@@ -1301,7 +1383,7 @@ Transform:
   m_Children:
   - {fileID: 8869998261340550188}
   m_Father: {fileID: 8756252899133876331}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8917785099606287509
 GameObject:
@@ -1479,18 +1561,15 @@ GameObject:
   - component: {fileID: -1242164282540955003}
   - component: {fileID: 6165289225805409938}
   - component: {fileID: 3198241585488853271}
-  - component: {fileID: 1350607735469539633}
   - component: {fileID: 3435197079996487907}
   - component: {fileID: 4123691688592980432}
   - component: {fileID: 5276025689218811690}
-  - component: {fileID: -1467300990375117068}
-  - component: {fileID: -3077280808496728714}
   - component: {fileID: 1705796111767034682}
-  - component: {fileID: -2562349354647341831}
+  - component: {fileID: -3077280808496728714}
   - component: {fileID: -8867377808631346629}
   m_Layer: 8
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1560,24 +1639,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!143 &1350607735469539633
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9064616156859936644}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Height: 0.6
-  m_Radius: 0.125
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!114 &3435197079996487907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,7 +1689,7 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 3198241585488853271}
---- !u!114 &-1467300990375117068
+--- !u!114 &1705796111767034682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1637,16 +1698,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 9064616156859936644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f835948276fae34295e7b16ea5599e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fd8200da3ee86543b90d0ec5c0fd1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  controller: {fileID: 1350607735469539633}
-  animator: {fileID: 3198241585488853271}
-  movementSpeed: 2
-  rotationSpeed: 120
-  interpolation: 0.3
+  playerName: Hesus
+  role: -1
+  isAlive: 1
+  movementSpeed: 3
+  rotationSpeed: 90
+  inBag: 0
+  hasBag: 0
+  bodyScaleX: 0.5
+  bodyScaleY: 0.5
+  bodyScaleZ: 0.5
 --- !u!114 &-3077280808496728714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,41 +1736,8 @@ MonoBehaviour:
   - {fileID: 4269792857837429982}
   - {fileID: 7197203347662035213}
   - {fileID: 7431985607974062684}
-  pps: {fileID: 1705796111767034682}
+  myProfile: {fileID: 1705796111767034682}
   matCharacter: {fileID: 2100000, guid: 33c6ddc55d7d1d547b894a1e84d71da0, type: 2}
---- !u!114 &1705796111767034682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9064616156859936644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd8200da3ee86543b90d0ec5c0fd1af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerName: Hesus
-  bodyScaleX: 0.5
-  bodyScaleY: 0.5
-  bodyScaleZ: 0.5
---- !u!114 &-2562349354647341831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9064616156859936644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5fd0cb33b18d6648b8dbd178ebc8d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPPS: {fileID: 1705796111767034682}
-  nameText: {fileID: 2622276075895027330}
-  myCanvas: {fileID: 1724946879435038088}
 --- !u!114 &-8867377808631346629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,3 +1750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327be1b45ac5f7b48973578b0a028eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  nameText: {fileID: 2622276075895027330}
+  myCanvas: {fileID: 1724946879435038088}
+  myBag: {fileID: 5136909153006818882}

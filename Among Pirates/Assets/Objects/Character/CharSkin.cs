@@ -9,7 +9,7 @@ public class CharSkin : MonoBehaviour
 
     [Header("ScriptSetup")]
     public GameObject[] myChar;
-    public PlayerProfileSettings pps;
+    public CharProfile myProfile;
 
 
     public Material matCharacter;
@@ -22,20 +22,20 @@ public class CharSkin : MonoBehaviour
 
     public void ResetTransformSize(float bsX, float bsY, float bsZ)
     {
-        pps.bodyScaleX = bsX;
-        pps.bodyScaleY = bsY;
-        pps.bodyScaleZ = bsZ;
-        float xa = minScale.x + (maxScale.x - minScale.x) * pps.bodyScaleX;
-        float ya = minScale.y + (maxScale.y - minScale.y) * pps.bodyScaleY;
-        float za = minScale.z + (maxScale.z - minScale.z) * pps.bodyScaleZ;
+        myProfile.bodyScaleX = bsX;
+        myProfile.bodyScaleY = bsY;
+        myProfile.bodyScaleZ = bsZ;
+        float xa = minScale.x + (maxScale.x - minScale.x) * myProfile.bodyScaleX;
+        float ya = minScale.y + (maxScale.y - minScale.y) * myProfile.bodyScaleY;
+        float za = minScale.z + (maxScale.z - minScale.z) * myProfile.bodyScaleZ;
         transform.Find("Pelvis/Body").localScale = new Vector3(xa, ya, za);
     }
     
     public Vector3 GetScaleFromValues()
     {
-        float xa = minScale.x + (maxScale.x - minScale.x) * pps.bodyScaleX;
-        float ya = minScale.y + (maxScale.y - minScale.y) * pps.bodyScaleY;
-        float za = minScale.z + (maxScale.z - minScale.z) * pps.bodyScaleZ;
+        float xa = minScale.x + (maxScale.x - minScale.x) * myProfile.bodyScaleX;
+        float ya = minScale.y + (maxScale.y - minScale.y) * myProfile.bodyScaleY;
+        float za = minScale.z + (maxScale.z - minScale.z) * myProfile.bodyScaleZ;
 
         return new Vector3(xa, ya, za);
     }
@@ -44,9 +44,9 @@ public class CharSkin : MonoBehaviour
 
     void Reset()
     {
-        pps.bodyScaleX = (transform.Find("Pelvis/Body").localScale.x - minScale.x) / (maxScale.x - minScale.x);
-        pps.bodyScaleY = (transform.Find("Pelvis/Body").localScale.y - minScale.y) / (maxScale.y - minScale.y);
-        pps.bodyScaleZ = (transform.Find("Pelvis/Body").localScale.z - minScale.z) / (maxScale.z - minScale.z);
+        myProfile.bodyScaleX = (transform.Find("Pelvis/Body").localScale.x - minScale.x) / (maxScale.x - minScale.x);
+        myProfile.bodyScaleY = (transform.Find("Pelvis/Body").localScale.y - minScale.y) / (maxScale.y - minScale.y);
+        myProfile.bodyScaleZ = (transform.Find("Pelvis/Body").localScale.z - minScale.z) / (maxScale.z - minScale.z);
     }
 
     void OnValidate()

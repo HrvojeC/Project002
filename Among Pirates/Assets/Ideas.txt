@@ -1,0 +1,24 @@
+26.12.2020.
+
+Playeri joinaju u game i stvore se svi na brodu.
+Prvo što dobiju opcije koji role žele igrati: CREW, KILLER ili THIEF
+- Crew je osnovni role. Jedini su koji igraju zajedno. Oni postavljaju vreće u brod, sva zarada u brodu na kraju igre se dijeli svim crew-ovima jednako. Dobivaju bonus za ispravno prijavljivanje drugih.
+- Thief krade blago odnosno uzima vreće i baca ih u more i zapisuje na karti njihovu lokaciju. Na kraju igre Thief dobije onoliko koliko vreća baci u vodu. 
+- Killer ubija druge dobiva gold po killu i za prezivljavanje, ako ostane sam na mapi dobiva sav gold iz broda.
+
+Generalno nikom osim crewu ne bi trebalo biti u interesu igrati skupa a i crew likovima bi trebalo biti upitno je li taj drugi crew stvarno crew.
+
+? Crew i Thief mogu nositi vreće ili objekte (killer nemože)
+? Thief i Killer se mogu zavući u vreću (crew nemože)
+? Killer se može pretvoriti u neki neutralni objekt
+? Crew može lupiti nogom vreću ili objekt i tako otkriti osobu unutra
+
+? Ako netko vidi ubojstvo a ne prijavi dobiva penalty
+
+
+31.12.2020.
+
+Par dana radim na tome da osposobim samo Hide&Seek opciju:
+Crew vs. Killer
+Crew može nositi vreće (Pick up / Drop down), može se sakriti u vreću (Jump in / Jump out)
+Killer može ubiti crew-a (Kill) i lupiti vreću (Kick) ako se crew sakriva unutra onda iskače van 
