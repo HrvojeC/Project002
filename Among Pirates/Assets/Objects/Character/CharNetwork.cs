@@ -5,13 +5,17 @@ using TMPro;
 
 public class CharNetwork : NetworkBehaviour
 {
+    [Header ("Prefab Library")]
+    public NetworkIdentity pref_BagOfGold;
+
+    [Header("My Bodyparts")]
     public TMP_Text nameText = null;
     public GameObject myCanvas = null;
     public GameObject myBag = null;
 
-    //Actions
-    private GameObject selection_Bag = null;
-    private GameObject selection_Char = null;
+    [Header("Actions")]
+    public GameObject selection_Bag = null;
+    public GameObject selection_Char = null;
 
     private void Start()
     {
@@ -109,6 +113,7 @@ public class CharNetwork : NetworkBehaviour
         //check collisions & find possible selections
         foreach (var hitCollider in hitColliders)
         {
+            //ako je player unutra treba zabraniti pickup
             if (hitCollider.tag == "BagGold") selection_Bag = hitCollider.gameObject;
             if (hitCollider.tag == "Player" && hitCollider.gameObject != this.gameObject) selection_Char = hitCollider.gameObject;
         }

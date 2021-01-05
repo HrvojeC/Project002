@@ -97,7 +97,23 @@ public class CharProfile : NetworkBehaviour
     [Command]
     private void CmdPickUpBag(bool hasBag1)
     {
+        //ovdje bi server trebao napraviti istu provjeru jer trenutno samo client radi provjeru a server vjeruje
+
         hasBag = hasBag1;
+
+        if (hasBag)
+        {
+            //ako imam bag znači da sam ga uzeo
+            NetworkServer.Destroy(LocalChar.myNetwork.selection_Bag);
+        }
+        else
+        {
+            //ako nemam bag znači da sam ga ostavio
+            GameObject newPrize = Instantiate(LocalChar.myNetwork.pref_BagOfGold.gameObject, transform.position + transform.forward * 0.2f, Quaternion.identity);
+            NetworkServer.Spawn(newPrize);
+        }
+
+
         RpcPickUpBag(hasBag1);
     }
 

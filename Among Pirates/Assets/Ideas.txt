@@ -22,3 +22,20 @@ Par dana radim na tome da osposobim samo Hide&Seek opciju:
 Crew vs. Killer
 Crew može nositi vreće (Pick up / Drop down), može se sakriti u vreću (Jump in / Jump out)
 Killer može ubiti crew-a (Kill) i lupiti vreću (Kick) ako se crew sakriva unutra onda iskače van 
+
+
+04.01.2020.
+
+Kada dovršim hide&seek trebao bih napraviti lobby
+razmišljao sam o 3 scene:
+Offline Scene - Login scena u kojoj se player ulogirava
+Menu Scene - Glavni izbornik i Lobby scena, tu se obavljaju SETTINGSi, SHOP, LOBBY, PARTY, KOMUNIKACIJA, SUPPORT...
+Gamge Scene - scena igre
+
+general chat - dobra ideja za komunikaciju među playerima u menu sceni general1,2,3,4 a dodatni se mogu dodavati
+reconnect opcija - u loginu se sa baze promjerava je li igrač već u igri, ako je u menu sceni omogući rejoin, u game sceni omogući dobivanje trenutnog stanja igre
+tournaments - 
+login from safe device - u bazi se provjerava s kojeg se devicea logina, ako je poznati onda može auto login
+
+STEAMWORKS - treba sve spojiti sa steamom, onda bi imali profile i bazu tamo.
+
