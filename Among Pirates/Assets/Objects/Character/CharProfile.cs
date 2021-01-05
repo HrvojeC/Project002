@@ -113,8 +113,8 @@ public class CharProfile : NetworkBehaviour
         else
         {
             //ako nemam bag znači da sam ga ostavio
-            GameObject newPrize = Instantiate(LocalChar.myNetwork.pref_BagOfGold.gameObject, transform.position + transform.forward * 0.2f, Quaternion.identity);
-            NetworkServer.Spawn(newPrize);
+            GameObject newBag = Instantiate(LocalChar.myNetwork.pref_BagOfGold.gameObject, transform.position + transform.forward * 0.2f, Quaternion.identity);
+            NetworkServer.Spawn(newBag);
         }
 
 
@@ -134,24 +134,26 @@ public class CharProfile : NetworkBehaviour
 
     public void Send_JumpInBag(bool inBag1)
     {
-        CmdJumpInBag(inBag1);
+        CmdJumpInBag(inBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>());
     }
 
     //Ovo tu client traži izmjenu svojih parametara na serveru
     [Command]
-    private void CmdJumpInBag(bool inBag1)
+    private void CmdJumpInBag(bool inBag1, NetworkIdentity myBagID)
     {
         inBag = inBag1;
+        myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside = inBag1;
         if (inBag) GetComponent<Animator>().Play("anim_char_hide");
         else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide")) GetComponent<Animator>().Play("anim_char_unhide");
-        RpcJumpInBag(inBag1);
+        RpcJumpInBag(inBag1, myBagID);
     }
 
     //Ovo client traži od servera da server radi na clientima
     [ClientRpc]
-    private void RpcJumpInBag(bool inBag1)
+    private void RpcJumpInBag(bool inBag1, NetworkIdentity myBagID)
     {
         inBag = inBag1;
+        myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside = inBag1;
         if (inBag) GetComponent<Animator>().Play("anim_char_hide");
         else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide")) GetComponent<Animator>().Play("anim_char_unhide");
     }

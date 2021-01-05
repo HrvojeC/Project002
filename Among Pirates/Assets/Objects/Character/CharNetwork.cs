@@ -100,11 +100,10 @@ public class CharNetwork : NetworkBehaviour
         // Killer - Kill, Kick Bag(takes 2sec, 50% to miss; force guy inside to Jumpout)
 
         //Create Collider
-        float sphereRadius = 0.2f;
-        Vector3 sphereCenter = transform.position + transform.forward * sphereRadius + transform.up * sphereRadius;
+        Vector3 sphereCenter = transform.position + transform.forward * 0.2f + transform.up * 0.2f;
 
         //Get Hits
-        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, 0.05f);
 
         //Initialize variables
         selection_Char = null;
@@ -114,7 +113,8 @@ public class CharNetwork : NetworkBehaviour
         foreach (var hitCollider in hitColliders)
         {
             //ako je player unutra treba zabraniti pickup
-            if (hitCollider.tag == "BagGold") selection_Bag = hitCollider.gameObject;
+            //ne prepoznaje BAG kao interaktivni objekt ako je netko unutra
+            if (hitCollider.tag == "BagGold" && !hitCollider.GetComponent<Bag_main>().isSomeoneInside) selection_Bag = hitCollider.gameObject;
             if (hitCollider.tag == "Player" && hitCollider.gameObject != this.gameObject) selection_Char = hitCollider.gameObject;
         }
 

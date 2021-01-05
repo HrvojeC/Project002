@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 368935992}
   - component: {fileID: 368935987}
   - component: {fileID: 368935986}
-  - component: {fileID: 368935988}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -189,22 +188,6 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 7214263200388074105, guid: ae9af954e419e2b408f7486533fb5ec7, type: 3}
---- !u!114 &368935988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368935985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db02619f0ab1e348bb2a58b388ff677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BagOfGold: {fileID: 7214263200388074105, guid: ae9af954e419e2b408f7486533fb5ec7,
-    type: 3}
-  DeadBody: {fileID: 9064616156859936644, guid: d292a6c98e2e3954a8eceffa7e521817,
-    type: 3}
 --- !u!4 &368935991
 Transform:
   m_ObjectHideFlags: 0
