@@ -90,12 +90,16 @@ public class CharProfile : NetworkBehaviour
 
     public void Send_PickUpBag(bool hasBag1)
     {
-        CmdPickUpBag(hasBag1);
+        //Ako želi pokupiti bag znači da vidi bag, ako želi spustiti bag onda ga nema ispred
+        if (LocalChar.myNetwork.selection_Bag != null)
+            CmdPickUpBag(hasBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>());
+        else
+            CmdPickUpBag(hasBag1, null);
     }
 
     //Ovo tu client traži izmjenu svojih parametara na serveru
     [Command]
-    private void CmdPickUpBag(bool hasBag1)
+    private void CmdPickUpBag(bool hasBag1, NetworkIdentity myBagID)
     {
         //ovdje bi server trebao napraviti istu provjeru jer trenutno samo client radi provjeru a server vjeruje
 
@@ -104,7 +108,7 @@ public class CharProfile : NetworkBehaviour
         if (hasBag)
         {
             //ako imam bag znači da sam ga uzeo
-            NetworkServer.Destroy(LocalChar.myNetwork.selection_Bag);
+            NetworkServer.Destroy(myBagID.gameObject);
         }
         else
         {
