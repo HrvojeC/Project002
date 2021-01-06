@@ -160,6 +160,44 @@ public class CharProfile : NetworkBehaviour
 
     #endregion
 
+    #region ACTION-KickBag
+
+    public void Send_KickBag()
+    {
+        CmdKickBag(LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>());
+    }
+
+    [Command]
+    private void CmdKickBag(NetworkIdentity myBagID)
+    {
+        if (myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside)
+        {
+            //zatresi Bag, odradi animaciju i
+            //natjeraj lika u bag-u da izađe
+        }
+        else
+        {
+            //zatresi Bag, odradi animaciju i dalje ništa
+        }
+        RpcKickBag(myBagID);
+    }
+
+    [ClientRpc]
+    private void RpcKickBag(NetworkIdentity myBagID)
+    {
+        if (myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside)
+        {
+            //zatresi Bag, odradi animaciju i
+            //natjeraj lika u bag-u da izađe
+        }
+        else
+        {
+            //zatresi Bag, odradi animaciju i dalje ništa
+        }
+    }
+
+    #endregion
+
     #region CHAT
 
     //Napravimo Custom Event i customly ga triggeramo/handlamo

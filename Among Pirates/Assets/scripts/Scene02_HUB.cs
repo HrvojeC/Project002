@@ -61,7 +61,7 @@ public class Scene02_HUB : MonoBehaviour
 
     public void Button_Kick()
     {
-
+        LocalChar.myObj.GetComponent<CharProfile>().Send_KickBag();
     }
     
     public void Button_JumpOut()
