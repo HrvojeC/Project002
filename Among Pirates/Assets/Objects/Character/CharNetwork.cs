@@ -114,7 +114,11 @@ public class CharNetwork : NetworkBehaviour
         {
             //ako je player unutra treba zabraniti pickup
             //ne prepoznaje BAG kao interaktivni objekt ako je netko unutra
-            if (hitCollider.tag == "BagGold" && !hitCollider.GetComponent<Bag_main>().isSomeoneInside) selection_Bag = hitCollider.gameObject;
+            if (hitCollider.tag == "BagGold")
+            {
+                if (LocalChar.myProfile.role == 0 && !hitCollider.GetComponent<Bag_main>().isSomeoneInside) selection_Bag = hitCollider.gameObject;
+                if (LocalChar.myProfile.role == 1) selection_Bag = hitCollider.gameObject;
+            }
             if (hitCollider.tag == "Player" && hitCollider.gameObject != this.gameObject) selection_Char = hitCollider.gameObject;
         }
 
