@@ -56,7 +56,7 @@ public class Scene02_HUB : MonoBehaviour
 
     public void Button_Kill()
     {
-
+        LocalChar.myObj.GetComponent<CharProfile>().Send_KillChar();
     }
 
     public void Button_Kick()

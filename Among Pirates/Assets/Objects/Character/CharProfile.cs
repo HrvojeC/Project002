@@ -216,6 +216,28 @@ public class CharProfile : NetworkBehaviour
 
     #endregion
 
+    #region ACTION-KillCharacter
+
+    public void Send_KillChar()
+    {
+        CmdKillChar(LocalChar.myNetwork.selection_Char.GetComponent<NetworkIdentity>());
+    }
+
+    [Command]
+    private void CmdKillChar(NetworkIdentity myTargetID)
+    {
+        
+        RpcKickBag(myTargetID);
+    }
+
+    [ClientRpc]
+    private void RpcKillChar(NetworkIdentity myTargetID)
+    {
+        
+    }
+
+    #endregion
+
     #region CHAT
 
     //Napravimo Custom Event i customly ga triggeramo/handlamo
@@ -291,7 +313,5 @@ public class CharProfile : NetworkBehaviour
     }
 
     #endregion
-
-
 
 }
