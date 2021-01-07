@@ -134,28 +134,44 @@ public class CharProfile : NetworkBehaviour
 
     public void Send_JumpInBag(bool inBag1)
     {
-        CmdJumpInBag(inBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>());
+        CmdJumpInBag(inBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>(), this.gameObject.GetComponent<NetworkIdentity>());
     }
 
     //Ovo tu client traži izmjenu svojih parametara na serveru
     [Command]
-    private void CmdJumpInBag(bool inBag1, NetworkIdentity myBagID)
+    private void CmdJumpInBag(bool inBag1, NetworkIdentity myBagID, NetworkIdentity myID)
     {
         inBag = inBag1;
         myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside = inBag1;
-        if (inBag) GetComponent<Animator>().Play("anim_char_hide");
-        else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide")) GetComponent<Animator>().Play("anim_char_unhide");
-        RpcJumpInBag(inBag1, myBagID);
+        if (inBag)
+        {
+            GetComponent<Animator>().Play("anim_char_hide");
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside = myID;
+        }
+        else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide"))
+        {
+            GetComponent<Animator>().Play("anim_char_unhide");
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside = null;
+        }
+        RpcJumpInBag(inBag1, myBagID, myID);
     }
 
     //Ovo client traži od servera da server radi na clientima
     [ClientRpc]
-    private void RpcJumpInBag(bool inBag1, NetworkIdentity myBagID)
+    private void RpcJumpInBag(bool inBag1, NetworkIdentity myBagID, NetworkIdentity myID)
     {
         inBag = inBag1;
         myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside = inBag1;
-        if (inBag) GetComponent<Animator>().Play("anim_char_hide");
-        else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide")) GetComponent<Animator>().Play("anim_char_unhide");
+        if (inBag)
+        {
+            GetComponent<Animator>().Play("anim_char_hide");
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside = myID;
+        }
+        else if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_char_hide"))
+        {
+            GetComponent<Animator>().Play("anim_char_unhide");
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside = null;
+        }
     }
 
     #endregion
@@ -174,6 +190,7 @@ public class CharProfile : NetworkBehaviour
         {
             //zatresi Bag, odradi animaciju i
             //natjeraj lika u bag-u da izađe
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false);
         }
         else
         {
@@ -189,6 +206,7 @@ public class CharProfile : NetworkBehaviour
         {
             //zatresi Bag, odradi animaciju i
             //natjeraj lika u bag-u da izađe
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false);
         }
         else
         {

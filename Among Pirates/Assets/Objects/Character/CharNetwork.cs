@@ -158,6 +158,8 @@ public class CharNetwork : NetworkBehaviour
                 }
                 break;
             case 1:
+                LocalChar.myHUB_Scr.Controller_Buttons[0].SetActive(true);
+                LocalChar.myHUB_Scr.Controller_Buttons[1].SetActive(true);
                 LocalChar.myHUB_Scr.Controller_Buttons[0].GetComponent<Button>().interactable = selection_Char;
                 LocalChar.myHUB_Scr.Controller_Buttons[1].GetComponent<Button>().interactable = selection_Bag;
                 break;
