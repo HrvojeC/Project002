@@ -58,6 +58,10 @@ public class Scene02_HUB : MonoBehaviour
     {
         LocalChar.myObj.GetComponent<CharProfile>().Send_KillChar();
     }
+    public void Button_Revive()
+    {
+        //LocalChar.myObj.GetComponent<CharProfile>().Send_KillChar();
+    }
 
     public void Button_Kick()
     {
@@ -79,7 +83,7 @@ public class Scene02_HUB : MonoBehaviour
         LocalChar.myObj.GetComponent<CharProfile>().Send_PickUpBag(true);
     }
 
-    public void Button_DropDown()
+    public void Button_PutDown()
     {
         LocalChar.myObj.GetComponent<CharProfile>().Send_PickUpBag(false);
     }

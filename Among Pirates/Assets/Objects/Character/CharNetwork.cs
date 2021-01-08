@@ -53,7 +53,11 @@ public class CharNetwork : NetworkBehaviour
         //ovo vrijedi samo za local playera
 
         //switches
-        if (LocalChar.myProfile.isAlive == false) return;
+        if (LocalChar.myProfile.isAlive == false)
+        {
+            Death();
+            return;
+        }
         if (LocalChar.myProfile.inBag == true) 
         {
             if (LocalChar.myProfile.role != -1) SetMyController();
@@ -128,7 +132,7 @@ public class CharNetwork : NetworkBehaviour
 
     void SetMyController ()
     {
-        // Controller_Buttons [0] = KillCharacter, [1] = KickBag, [2] = PickUpBag, [3] = DropDownBag, [4] = JumpInBag, [5] = JumpOutBag
+        // Controller_Buttons [0] = KillCharacter, [1] = KickBag, [2] = PickUpBag, [3] = PutDownBag, [4] = JumpInBag, [5] = JumpOutBag, [6] = ReviveCharacter
         switch (LocalChar.myProfile.role)
         {
             case -1:
@@ -170,5 +174,10 @@ public class CharNetwork : NetworkBehaviour
                 break;
 
         }
+    }
+
+    void Death ()
+    {
+        if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_charDead_Pose01")) GetComponent<Animator>().Play("anim_charDead_Pose01");
     }
 }

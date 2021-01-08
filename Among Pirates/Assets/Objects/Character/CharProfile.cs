@@ -226,14 +226,14 @@ public class CharProfile : NetworkBehaviour
     [Command]
     private void CmdKillChar(NetworkIdentity myTargetID)
     {
-        
-        RpcKickBag(myTargetID);
+        myTargetID.gameObject.GetComponent<CharProfile>().isAlive = false;
+        RpcKillChar(myTargetID);
     }
 
     [ClientRpc]
     private void RpcKillChar(NetworkIdentity myTargetID)
     {
-        
+        myTargetID.gameObject.GetComponent<CharProfile>().isAlive = false;
     }
 
     #endregion

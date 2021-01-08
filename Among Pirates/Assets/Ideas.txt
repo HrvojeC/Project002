@@ -30,7 +30,7 @@ Kada dovršim hide&seek trebao bih napraviti lobby
 razmišljao sam o 3 scene:
 Offline Scene - Login scena u kojoj se player ulogirava
 Menu Scene - Glavni izbornik i Lobby scena, tu se obavljaju SETTINGSi, SHOP, LOBBY, PARTY, KOMUNIKACIJA, SUPPORT...
-Gamge Scene - scena igre
+Game Scene - scena igre
 
 general chat - dobra ideja za komunikaciju među playerima u menu sceni general1,2,3,4 a dodatni se mogu dodavati
 reconnect opcija - u loginu se sa baze promjerava je li igrač već u igri, ako je u menu sceni omogući rejoin, u game sceni omogući dobivanje trenutnog stanja igre
@@ -39,3 +39,16 @@ login from safe device - u bazi se provjerava s kojeg se devicea logina, ako je 
 
 STEAMWORKS - treba sve spojiti sa steamom, onda bi imali profile i bazu tamo.
 
+
+08.01.2020.
+
+Crew - REVIVE action?
+Killer - 2 stack of KILL action
+
+Revive treba 2 osobe koje channelaju kako bi oživili jednog lika 
+ReviveChanneling = 2x KillCooldown
+
+ovime Crew i dalje imaju mogućnost revive-a a Killer je i dalje u prednosti.
+
+GENERAL - Like & Dislike player - Popis playera treba postojati sastrane, playeri mogu a i nemoraju ocjeniti svakog igrača sa LIKE, DISLIKE.
+Kada igrač pokupi puno lajkova dobiva bodove, ako dobiva puno dislike-ova onda mu prijeti izbacivanje iz rooma.
