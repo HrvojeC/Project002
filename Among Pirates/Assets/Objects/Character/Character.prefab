@@ -1706,6 +1706,10 @@ MonoBehaviour:
   playerName: Hesus
   role: -1
   isAlive: 1
+  revive_helpers:
+  - {fileID: 0}
+  - {fileID: 0}
+  revive_timer: 0
   movementSpeed: 3
   rotationSpeed: 90
   inBag: 0

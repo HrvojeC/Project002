@@ -7,10 +7,11 @@ public class CharProfile : NetworkBehaviour
 {
     [Header("General")]
     public string playerName = "Hesus";
-
     public int role = -1;                   //0=crew, 1=Killer, 2=Thief
-
     public bool isAlive = true;             //is this player alive
+    public NetworkIdentity[] revive_helpers = new NetworkIdentity[2]; //players that are reviving this char if it's dead
+    public float revive_timer = 0;          //time.time when revivers started channeling. 0 = off
+
 
     [Header("Stats")]
     public float movementSpeed = 3f;
@@ -21,14 +22,9 @@ public class CharProfile : NetworkBehaviour
     public bool hasBag = false;             //if character is holding a bag or not
 
     [Header("Skin & Size")]
-    [Range(0, 1.0f)]
-    public float bodyScaleX = 0.5f;
-
-    [Range(0, 1.0f)]
-    public float bodyScaleY = 0.5f;
-
-    [Range(0, 1.0f)]
-    public float bodyScaleZ = 0.5f;
+    [Range(0, 1.0f)] public float bodyScaleX = 0.5f;
+    [Range(0, 1.0f)] public float bodyScaleY = 0.5f;
+    [Range(0, 1.0f)] public float bodyScaleZ = 0.5f;
 
     private void Start()
     {
@@ -238,26 +234,65 @@ public class CharProfile : NetworkBehaviour
 
     #endregion
 
+    #region ACTION-ReviveCharacter
+
+    /// <summary>
+    /// Revive character needs 2 players to channel revive spell for 10seconds
+    /// Dead character has 2 variables on it:
+    /// number of characters reviving
+    /// reviveTimer
+    /// When second player starts reviving spell, timer starts counting on server. 
+    /// </summary>
+
+    public void Send_ReviveChar(bool startRevive)
+    {
+        CmdReviveChar(LocalChar.myNetwork.selection_Char.GetComponent<NetworkIdentity>());
+    }
+
+    [Command]
+    private void CmdReviveChar(NetworkIdentity myTargetID)
+    {
+        CharProfile a = myTargetID.gameObject.GetComponent<CharProfile>();
+
+        if (!Array.Exists(a.revive_helpers, element => element == this.GetComponent<NetworkIdentity>())) //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+        {
+
+        }
+        RpcReviveChar(myTargetID);
+    }
+
+    [ClientRpc]
+    private void RpcReviveChar(NetworkIdentity myTargetID)
+    {
+        CharProfile a = myTargetID.gameObject.GetComponent<CharProfile>();
+    }
+
+    #endregion
+
     #region CHAT
 
     //Napravimo Custom Event i customly ga triggeramo/handlamo
     //Netko će priložiti poruku i ovaj event se treba triggerati
-    private static event Action<CharProfile, string> OnMessage;
+    private static event Action<NetworkIdentity, string> OnMessage;
 
     //Kada se event triggera, poziva se ova metoda, preuzima se message iz eventa
-    private void HandleNewMessage(CharProfile profile, string message)
+    private void HandleNewMessage(NetworkIdentity profile, string message)
     {
-        GameObject.Find("Chat/Text").GetComponent<TMP_Text>().text += "\n<b><color=red>" + profile.playerName + ":</color></b> ";
+        GameObject.Find("Chat/Text").GetComponent<TMP_Text>().text += "\n<b><color=red>" + profile.GetComponent<CharProfile>().playerName + ":</color></b> ";
         GameObject.Find("Chat/Text").GetComponent<TMP_Text>().text += message;
+        Console.Send("new message arrived (" + message + ")");
     }
 
     //Pritiskom na tipku pokreće se slanje poruke
     public void SendChatMsg()
     {
         string message = GameObject.Find("Chat/InputField").GetComponent<TMP_InputField>().text;
+        GameObject.Find("Chat/InputField").GetComponent<TMP_InputField>().text = string.Empty;
+
+        if (message.Trim() == "") { Console.Send("could not send empty message"); return; }
+        Console.Send("tried to send text (" + message + ")");
 
         CmdSendMessage(message);
-
     }
 
     //Ovo tu client traži da server na sebi zapiše promjene koje je client napravio
@@ -266,10 +301,7 @@ public class CharProfile : NetworkBehaviour
     {
         //u osnovi client pita: "Serveru, možeš li ovaj moj info izmjeniti na sebi?"
         //Server može odobravati ili odbiti ovdje
-        if (message.Trim() == "") { Console.Send("could not send empty message"); return; }
-        Console.Send("tried to send text (" + message + ")");
         //Ako server odobri onda pozova RPC na svim clientima
-        GameObject.Find("Chat/InputField").GetComponent<TMP_InputField>().text = string.Empty;
         RpcHandleMessage(message.Trim());
     }
 
@@ -278,7 +310,7 @@ public class CharProfile : NetworkBehaviour
     private void RpcHandleMessage(string message)
     {
         //Proslijedi (clientu/svima) trigger na event 
-        OnMessage?.Invoke(this, message);
+        OnMessage?.Invoke(GetComponent<NetworkIdentity>(), message);
     }
 
     #endregion
