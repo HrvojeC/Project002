@@ -58,9 +58,9 @@ public class Scene02_HUB : MonoBehaviour
     {
         LocalChar.myObj.GetComponent<CharProfile>().Send_KillChar();
     }
-    public void Button_Revive()
+    public void Button_Revive(bool StartRevive)
     {
-        LocalChar.myObj.GetComponent<CharProfile>().Send_ReviveChar(true);
+        LocalChar.myObj.GetComponent<CharProfile>().Send_ReviveChar(StartRevive);
     }
 
     public void Button_Kick()

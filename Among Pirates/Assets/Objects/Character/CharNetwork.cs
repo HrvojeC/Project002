@@ -132,7 +132,7 @@ public class CharNetwork : NetworkBehaviour
 
     void SetMyController ()
     {
-        // Controller_Buttons [0] = KillCharacter, [1] = KickBag, [2] = PickUpBag, [3] = PutDownBag, [4] = JumpInBag, [5] = JumpOutBag, [6] = ReviveCharacter
+        // Controller_Buttons [0] = KillCharacter, [1] = KickBag, [2] = PickUpBag, [3] = PutDownBag, [4] = JumpInBag, [5] = JumpOutBag, [6] = ReviveCharacter, [7] = StopRevivingCharacter
         switch (LocalChar.myProfile.role)
         {
             case -1:

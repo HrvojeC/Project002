@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using TMPro;
 
 public class CharProfile : NetworkBehaviour
 {
+
     [Header("General")]
     public string playerName = "Hesus";
     public int role = -1;                   //0=crew, 1=Killer, 2=Thief
     public bool isAlive = true;             //is this player alive
-    public NetworkIdentity[] revive_helpers = new NetworkIdentity[2]; //players that are reviving this char if it's dead
+    public List<NetworkIdentity> revive_helpers = new List<NetworkIdentity>(); //players that are reviving this char if it's dead
     public float revive_timer = 0;          //time.time when revivers started channeling. 0 = off
 
 
@@ -237,27 +239,54 @@ public class CharProfile : NetworkBehaviour
     #region ACTION-ReviveCharacter
 
     /// <summary>
-    /// Revive character needs 2 players to channel revive spell for 10seconds
-    /// Dead character has 2 variables on it:
-    /// number of characters reviving
-    /// reviveTimer
-    /// When second player starts reviving spell, timer starts counting on server. 
+    /// To Revive character 2 players must channel revive action for 10seconds
+    /// When second player starts reviving action, timer starts counting on server. 
     /// </summary>
 
     public void Send_ReviveChar(bool startRevive)
     {
-        CmdReviveChar(LocalChar.myNetwork.selection_Char.GetComponent<NetworkIdentity>());
+        //Start Revive true/false, who are you reviving?
+        CmdReviveChar(startRevive, LocalChar.myNetwork.selection_Char.GetComponent<NetworkIdentity>());
     }
 
     [Command]
-    private void CmdReviveChar(NetworkIdentity myTargetID)
+    private void CmdReviveChar(bool startRevive, NetworkIdentity myTargetID)
     {
         CharProfile a = myTargetID.gameObject.GetComponent<CharProfile>();
 
-        if (!Array.Exists(a.revive_helpers, element => element == this.GetComponent<NetworkIdentity>())) //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+        //da li počinjemo revive ili prestajemo
+        if (startRevive)
         {
-
+            //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+            if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>())) a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
+            else
+            {
+                //igrač je ubrojan provjeri je li dovoljno igrača za revive i je li revive počeo
+                if (a.revive_helpers.Count >= 2)
+                {
+                    if (a.revive_timer == 0)
+                    {
+                        //počni timer heal
+                        a.revive_timer = Time.time;
+                    }
+                }
+            }
         }
+        else
+        {
+            //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+            if (a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
+            {
+                a.revive_helpers.Remove(this.GetComponent<NetworkIdentity>());
+                if (a.revive_helpers.Count < 2)
+                {
+                    //resetiraj revive
+                    a.revive_timer = 0;
+                }
+            }
+        }
+
+
         RpcReviveChar(myTargetID);
     }
 
@@ -265,6 +294,10 @@ public class CharProfile : NetworkBehaviour
     private void RpcReviveChar(NetworkIdentity myTargetID)
     {
         CharProfile a = myTargetID.gameObject.GetComponent<CharProfile>();
+
+        //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+        if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>())) a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
+
     }
 
     #endregion
