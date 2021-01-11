@@ -45,11 +45,6 @@ public class Scene02_HUB : MonoBehaviour
 
     }
 
-    public void Canvas_Controller_Kill_OnClick()
-    {
-
-    }
-
     #endregion
 
     #region Player_Buttons

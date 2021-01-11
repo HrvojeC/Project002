@@ -243,10 +243,11 @@ public class CharProfile : NetworkBehaviour
     /// When second player starts reviving action, timer starts counting on server. 
     /// </summary>
 
+    //This is first part where players assign themselves as revivers (they start REVIVE action)
     public void Send_ReviveChar(bool startRevive)
     {
         //Start Revive true/false, who are you reviving?
-        CmdReviveChar(startRevive, LocalChar.myNetwork.selection_Char.GetComponent<NetworkIdentity>());
+        CmdReviveChar(startRevive, LocalChar.myNetwork.selection_CharDead.GetComponent<NetworkIdentity>());
     }
 
     [Command]
@@ -258,48 +259,61 @@ public class CharProfile : NetworkBehaviour
         if (startRevive)
         {
             //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
-            if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>())) a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
-            else
-            {
-                //igrač je ubrojan provjeri je li dovoljno igrača za revive i je li revive počeo
-                if (a.revive_helpers.Count >= 2)
-                {
-                    if (a.revive_timer == 0)
-                    {
-                        //počni timer heal
-                        a.revive_timer = Time.time;
-                    }
-                }
-            }
+            if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
+                a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
         }
         else
         {
-            //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+            //je li ovaj igrač ubrojan kao reviver ako je izbaci ga
             if (a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
-            {
                 a.revive_helpers.Remove(this.GetComponent<NetworkIdentity>());
-                if (a.revive_helpers.Count < 2)
-                {
-                    //resetiraj revive
-                    a.revive_timer = 0;
-                }
-            }
         }
 
-
-        RpcReviveChar(myTargetID);
+        RpcReviveChar(startRevive, myTargetID);
     }
 
     [ClientRpc]
-    private void RpcReviveChar(NetworkIdentity myTargetID)
+    private void RpcReviveChar(bool startRevive, NetworkIdentity myTargetID)
     {
         CharProfile a = myTargetID.gameObject.GetComponent<CharProfile>();
 
-        //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
-        if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>())) a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
-
+        //da li počinjemo revive ili prestajemo
+        if (startRevive)
+        {
+            //je li ovaj igrač ubrojan kao reviver ako nije ubroji ga
+            if (!a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
+                a.revive_helpers.Add(this.GetComponent<NetworkIdentity>());
+        }
+        else
+        {
+            //je li ovaj igrač ubrojan kao reviver ako je izbaci ga
+            if (a.revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
+                a.revive_helpers.Remove(this.GetComponent<NetworkIdentity>());
+        }
     }
 
+    //This is second part when server finishes revive countdown (REVIVE SUCCESSFUL)
+    [Command]
+    public void CmdReviveSuccess(NetworkIdentity revivedTargetID)
+    {
+        revivedTargetID.gameObject.GetComponent<CharProfile>().isAlive = true;
+        //unassign helping players
+        revivedTargetID.gameObject.GetComponent<CharProfile>().revive_helpers.Clear();
+        //animacija anim_char_idle 1
+        revivedTargetID.gameObject.GetComponent<Animator>().Play("anim_char_idle 1");
+
+        RpcReviveSuccess(revivedTargetID);
+    }
+
+    [ClientRpc]
+    private void RpcReviveSuccess(NetworkIdentity revivedTargetID)
+    {
+        revivedTargetID.gameObject.GetComponent<CharProfile>().isAlive = true;
+        //unassign helping players
+        revivedTargetID.gameObject.GetComponent<CharProfile>().revive_helpers.Clear();
+        //animacija anim_char_idle 1
+        revivedTargetID.gameObject.GetComponent<Animator>().Play("anim_char_idle 1");
+    }
     #endregion
 
     #region CHAT

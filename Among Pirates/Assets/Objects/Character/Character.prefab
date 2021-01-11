@@ -1706,9 +1706,7 @@ MonoBehaviour:
   playerName: Hesus
   role: -1
   isAlive: 1
-  revive_helpers:
-  - {fileID: 0}
-  - {fileID: 0}
+  revive_helpers: []
   revive_timer: 0
   movementSpeed: 3
   rotationSpeed: 90
@@ -1763,3 +1761,4 @@ MonoBehaviour:
   myBag: {fileID: 5136909153006818882}
   selection_Bag: {fileID: 0}
   selection_Char: {fileID: 0}
+  selection_CharDead: {fileID: 0}

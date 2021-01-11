@@ -16,6 +16,7 @@ public class CharNetwork : NetworkBehaviour
     [Header("Actions")]
     public GameObject selection_Bag = null;
     public GameObject selection_Char = null;
+    public GameObject selection_CharDead = null;
 
     private void Start()
     {
@@ -40,17 +41,18 @@ public class CharNetwork : NetworkBehaviour
 
     public void Update()
     {
-        //ovo vrijedi i za local i non-local playera
+//ovo vrijedi i za local i non-local playera
+        ServerUpdate();
         myBag.SetActive(GetComponent<CharProfile>().hasBag);
         myCanvas.transform.rotation = Camera.main.transform.rotation;
 
         if (!isLocalPlayer)
         {
-            //ovo vrijedi samo za non-local playera
+//ovo vrijedi samo za non-local playera
             nameText.text = GetComponent<CharProfile>().playerName;
             return;
         }
-        //ovo vrijedi samo za local playera
+//ovo vrijedi samo za local playera
 
         //switches
         if (LocalChar.myProfile.isAlive == false)
@@ -112,6 +114,7 @@ public class CharNetwork : NetworkBehaviour
         //Initialize variables
         selection_Char = null;
         selection_Bag = null;
+        selection_CharDead = null;
 
         //check collisions & find possible selections
         foreach (var hitCollider in hitColliders)
@@ -123,7 +126,13 @@ public class CharNetwork : NetworkBehaviour
                 if (LocalChar.myProfile.role == 0 && !hitCollider.GetComponent<Bag_main>().isSomeoneInside) selection_Bag = hitCollider.gameObject;
                 if (LocalChar.myProfile.role == 1) selection_Bag = hitCollider.gameObject;
             }
-            if (hitCollider.tag == "Player" && hitCollider.gameObject != this.gameObject) selection_Char = hitCollider.gameObject;
+            if (hitCollider.tag == "Player" && hitCollider.gameObject != this.gameObject)
+            {
+                if (hitCollider.GetComponent<CharProfile>().isAlive)
+                    selection_Char = hitCollider.gameObject;
+                else
+                    selection_CharDead = hitCollider.gameObject;
+            }
         }
 
         //activate buttons and input actions
@@ -132,18 +141,13 @@ public class CharNetwork : NetworkBehaviour
 
     void SetMyController ()
     {
+        // Prvo ugasi sve tipke a onda pali po potrebi
+        foreach (GameObject a in LocalChar.myHUB_Scr.Controller_Buttons) a.SetActive(false);
+
         // Controller_Buttons [0] = KillCharacter, [1] = KickBag, [2] = PickUpBag, [3] = PutDownBag, [4] = JumpInBag, [5] = JumpOutBag, [6] = ReviveCharacter, [7] = StopRevivingCharacter
         switch (LocalChar.myProfile.role)
         {
-            case -1:
-                LocalChar.myHUB_Scr.Controller_Buttons[0].SetActive(false);
-                LocalChar.myHUB_Scr.Controller_Buttons[1].SetActive(false);
-                LocalChar.myHUB_Scr.Controller_Buttons[2].SetActive(false);
-                LocalChar.myHUB_Scr.Controller_Buttons[3].SetActive(false);
-                LocalChar.myHUB_Scr.Controller_Buttons[4].SetActive(false);
-                LocalChar.myHUB_Scr.Controller_Buttons[5].SetActive(false);
-                break;
-            case 0:
+            case 0:     //------CREW------
                 LocalChar.myHUB_Scr.Controller_Buttons[5].SetActive(LocalChar.myProfile.inBag);
                 LocalChar.myHUB_Scr.Controller_Buttons[4].SetActive(!LocalChar.myProfile.inBag && !LocalChar.myProfile.hasBag);
 
@@ -160,8 +164,17 @@ public class CharNetwork : NetworkBehaviour
                     LocalChar.myHUB_Scr.Controller_Buttons[2].GetComponent<Button>().interactable = selection_Bag;
                     LocalChar.myHUB_Scr.Controller_Buttons[4].GetComponent<Button>().interactable = selection_Bag;
                 }
+
+                if (selection_CharDead)
+                {
+                    //Jeli ovaj player već zapisan u listi helpera
+                    if (selection_CharDead.GetComponent<CharProfile>().revive_helpers.Contains(this.GetComponent<NetworkIdentity>()))
+                        LocalChar.myHUB_Scr.Controller_Buttons[7].SetActive(true); //StopRevive
+                    else
+                        LocalChar.myHUB_Scr.Controller_Buttons[6].SetActive(true); //StartRevive
+                }
                 break;
-            case 1:
+            case 1:     //------KILLER------
                 LocalChar.myHUB_Scr.Controller_Buttons[0].SetActive(true);
                 LocalChar.myHUB_Scr.Controller_Buttons[1].SetActive(true);
                 LocalChar.myHUB_Scr.Controller_Buttons[0].GetComponent<Button>().interactable = selection_Char;
@@ -176,8 +189,35 @@ public class CharNetwork : NetworkBehaviour
         }
     }
 
-    void Death ()
+    void Death()
     {
         if (!GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("anim_charDead_Pose01")) GetComponent<Animator>().Play("anim_charDead_Pose01");
     }
+
+    #region SERVER ONLY
+
+    [ServerCallback]
+    public void ServerUpdate()
+    {
+        CharProfile myProfile = GetComponent<CharProfile>();
+
+        if (!myProfile.isAlive)
+        {
+            //print("name: " + myProfile.playerName + ", before " + myProfile.revive_helpers.Count);
+            //for (int i = myProfile.revive_helpers.Count-1; i >= 0; i--) { if (myProfile.revive_helpers[i] == null) myProfile.revive_helpers.RemoveAt(i); }
+            //print("name: " + myProfile.playerName + ", after " + myProfile.revive_helpers.Count);
+            if (myProfile.revive_helpers.Count >= 2)
+            {
+                myProfile.revive_timer += Time.deltaTime;
+                if (Time.time - myProfile.revive_timer > 10.0f)
+                {
+
+                }
+            }
+            else myProfile.revive_timer = 0;
+        }
+    }
+
+
+    #endregion
 }
