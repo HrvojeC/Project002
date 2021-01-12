@@ -294,25 +294,25 @@ public class CharProfile : NetworkBehaviour
 
     //This is second part when server finishes revive countdown (REVIVE SUCCESSFUL)
     [Command]
-    public void CmdReviveSuccess(NetworkIdentity revivedTargetID)
+    public void CmdReviveSuccess()
     {
-        revivedTargetID.gameObject.GetComponent<CharProfile>().isAlive = true;
+        isAlive = true;
         //unassign helping players
-        revivedTargetID.gameObject.GetComponent<CharProfile>().revive_helpers.Clear();
+        revive_helpers.Clear();
         //animacija anim_char_idle 1
-        revivedTargetID.gameObject.GetComponent<Animator>().Play("anim_char_idle 1");
+        GetComponent<Animator>().Play("anim_char_idle 1");
 
-        RpcReviveSuccess(revivedTargetID);
+        RpcReviveSuccess();
     }
 
     [ClientRpc]
-    private void RpcReviveSuccess(NetworkIdentity revivedTargetID)
+    private void RpcReviveSuccess()
     {
-        revivedTargetID.gameObject.GetComponent<CharProfile>().isAlive = true;
+        isAlive = true;
         //unassign helping players
-        revivedTargetID.gameObject.GetComponent<CharProfile>().revive_helpers.Clear();
+        revive_helpers.Clear();
         //animacija anim_char_idle 1
-        revivedTargetID.gameObject.GetComponent<Animator>().Play("anim_char_idle 1");
+        GetComponent<Animator>().Play("anim_char_idle 1");
     }
     #endregion
 

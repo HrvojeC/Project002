@@ -211,7 +211,7 @@ public class CharNetwork : NetworkBehaviour
                 myProfile.revive_timer += Time.deltaTime;
                 if (Time.time - myProfile.revive_timer > 10.0f)
                 {
-
+                    myProfile.CmdReviveSuccess();
                 }
             }
             else myProfile.revive_timer = 0;

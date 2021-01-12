@@ -10,6 +10,7 @@ public class Scene02_HUB : MonoBehaviour
     public Scrollbar Skin_SetSizeX;
     public Scrollbar Skin_SetSizeY;
     public Scrollbar Skin_SetSizeZ;
+    public GameObject[] Main_Panels;
     public GameObject[] Controller_Buttons;
 
     //[Header("Set on Start")]
@@ -18,33 +19,43 @@ public class Scene02_HUB : MonoBehaviour
     #region Buttons
 
     #region General_Buttons
-    public void Canvas_Chat_Button_OnClick()
+
+    public void Panel_Toggle(int panelIndex)
+    {
+        Main_Panels[panelIndex].SetActive(!Main_Panels[panelIndex].activeInHierarchy);
+    }
+
+    public void Chat_SendMessage()
     {
         LocalChar.myObj.GetComponent<CharProfile>().SendChatMsg();
     }
-    public void Canvas_RoleSet_OnClick(int roleID)
+
+    public void RoleSet_OnClick(int roleID)
     {
         LocalChar.myObj.GetComponent<CharProfile>().Send_SetRole(roleID);
         LocalChar.myObj.GetComponent<CharProfile>().Send_SetName(LocalChar.myObj.GetComponent<CharProfile>().playerName);
     }
 
-    public void Canvas_Profile_General_SetName_OnClick()
+    #endregion
+
+    #region Profile_Buttons
+
+    public void Profile_General_SetName()
     {
         if (General_SetName.text.Trim() == "") return;
         
         LocalChar.myObj.GetComponent<CharProfile>().Send_SetName(General_SetName.text);
     }
 
-    public void Canvas_Profile_Skin_SetSizes_OnClick()
+    public void Profile_Skin_SetSizes()
     {
         LocalChar.myObj.GetComponent<CharProfile>().TriggerChangeScale(Skin_SetSizeX.value, Skin_SetSizeY.value, Skin_SetSizeZ.value);
     }
 
-    public void Canvas_Profile_Skin_SetSkin_OnClick()
+    public void Profile_Skin_SetSkin()
     {
 
     }
-
     #endregion
 
     #region Player_Buttons
@@ -82,7 +93,7 @@ public class Scene02_HUB : MonoBehaviour
     {
         LocalChar.myObj.GetComponent<CharProfile>().Send_PickUpBag(false);
     }
-
     #endregion
+
     #endregion
 }
