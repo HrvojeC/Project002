@@ -130,9 +130,11 @@ public class CharProfile : NetworkBehaviour
 
     #region ACTION-JumpInBag
 
-    public void Send_JumpInBag(bool inBag1)
+    public void Send_JumpInBag(bool inBag1, NetworkIdentity myBagID)
     {
-        CmdJumpInBag(inBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>(), this.gameObject.GetComponent<NetworkIdentity>());
+        //dolazi do pogreške u network characterima kada se koristi LocalChar, jer u error slučaju ne-lokalni char radi akciju a gleda se LocalChar što sruši igru
+        if (myBagID == null) CmdJumpInBag(inBag1, LocalChar.myNetwork.selection_Bag.GetComponent<NetworkIdentity>(), this.gameObject.GetComponent<NetworkIdentity>());
+        else CmdJumpInBag(inBag1, myBagID, this.gameObject.GetComponent<NetworkIdentity>());
     }
 
     //Ovo tu client traži izmjenu svojih parametara na serveru
@@ -186,13 +188,23 @@ public class CharProfile : NetworkBehaviour
     {
         if (myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside)
         {
-            //zatresi Bag, odradi animaciju i
+            //Ako je netko u BAGu odradi animacije:
+            //Zatresi Bag
+            myBagID.GetComponent<Animator>().Play("anim_Bag_Kicked");
+            //Killer kick animacija
+            GetComponent<Animator>().Play("anim_char_kickbag");
             //natjeraj lika u bag-u da izađe
-            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false);
+            NetworkIdentity targetID = myBagID.gameObject.GetComponent<Bag_main>().GuyInside;
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false, myBagID);
         }
         else
         {
-            //zatresi Bag, odradi animaciju i dalje ništa
+            //Ako nitko nije u BAGu odradi animacije:
+            //Zatresi Bag
+            myBagID.GetComponent<Animator>().Play("anim_Bag_Kicked");
+            //Killer kick animacija
+            GetComponent<Animator>().Play("anim_char_kickbag");
+            //i dalje ništa
         }
         RpcKickBag(myBagID);
     }
@@ -202,13 +214,18 @@ public class CharProfile : NetworkBehaviour
     {
         if (myBagID.gameObject.GetComponent<Bag_main>().isSomeoneInside)
         {
-            //zatresi Bag, odradi animaciju i
+            //Ako je netko u BAGu odradi animacije:
+            //Zatresi Bag
+            //Killer kick animacija
             //natjeraj lika u bag-u da izađe
-            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false);
+            myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false, myBagID);
         }
         else
         {
-            //zatresi Bag, odradi animaciju i dalje ništa
+            //Ako nitko nije u BAGu odradi animacije:
+            //Zatresi Bag
+            //Killer kick animacija
+            //i dalje ništa
         }
     }
 

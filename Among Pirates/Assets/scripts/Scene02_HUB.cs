@@ -76,12 +76,12 @@ public class Scene02_HUB : MonoBehaviour
     
     public void Button_JumpOut()
     {
-        LocalChar.myObj.GetComponent<CharProfile>().Send_JumpInBag(false);
+        LocalChar.myObj.GetComponent<CharProfile>().Send_JumpInBag(false, null);
     }
     
     public void Button_JumpIn()
     {
-        LocalChar.myObj.GetComponent<CharProfile>().Send_JumpInBag(true);
+        LocalChar.myObj.GetComponent<CharProfile>().Send_JumpInBag(true, null);
     }
     
     public void Button_PickUp()

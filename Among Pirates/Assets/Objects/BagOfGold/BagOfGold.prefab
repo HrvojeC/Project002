@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7334100278675067803}
   - component: {fileID: 2194967923714168356}
+  - component: {fileID: 5524595008079750357}
   - component: {fileID: -6468741620767238310}
+  - component: {fileID: 579436855343628780}
   - component: {fileID: 3857434745176269148}
   m_Layer: 9
   m_Name: BagOfGold
@@ -47,6 +49,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!95 &5524595008079750357
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7214263200388074105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b79508fca3f8f147ae5f0c806aedbc4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-6468741620767238310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +84,22 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &579436855343628780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7214263200388074105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 0}
 --- !u!114 &3857434745176269148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea4824c2cab7449b2ae22d5c931507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  isSomeoneInside: 0
+  GuyInside: {fileID: 0}
 --- !u!1 &7262868873862332154
 GameObject:
   m_ObjectHideFlags: 0
