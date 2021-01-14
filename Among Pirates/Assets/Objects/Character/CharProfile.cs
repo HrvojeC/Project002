@@ -216,7 +216,9 @@ public class CharProfile : NetworkBehaviour
         {
             //Ako je netko u BAGu odradi animacije:
             //Zatresi Bag
+            myBagID.GetComponent<Animator>().Play("anim_Bag_Kicked");
             //Killer kick animacija
+            GetComponent<Animator>().Play("anim_char_kickbag");
             //natjeraj lika u bag-u da izađe
             myBagID.gameObject.GetComponent<Bag_main>().GuyInside.gameObject.GetComponent<CharProfile>().Send_JumpInBag(false, myBagID);
         }
@@ -224,7 +226,9 @@ public class CharProfile : NetworkBehaviour
         {
             //Ako nitko nije u BAGu odradi animacije:
             //Zatresi Bag
+            myBagID.GetComponent<Animator>().Play("anim_Bag_Kicked");
             //Killer kick animacija
+            GetComponent<Animator>().Play("anim_char_kickbag");
             //i dalje ništa
         }
     }

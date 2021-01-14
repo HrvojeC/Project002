@@ -208,9 +208,13 @@ public class CharNetwork : NetworkBehaviour
             //print("name: " + myProfile.playerName + ", after " + myProfile.revive_helpers.Count);
             if (myProfile.revive_helpers.Count >= 2)
             {
-                myProfile.revive_timer += Time.deltaTime;
-                if (Time.time - myProfile.revive_timer > 10.0f)
+                print("timer: " + Time.time + " - " + myProfile.revive_timer);
+
+                if (myProfile.revive_timer == 0)
+                    myProfile.revive_timer = Time.time;
+                else if (Time.time - myProfile.revive_timer > 10.0f)
                 {
+                    myProfile.revive_timer = 0;
                     myProfile.CmdReviveSuccess();
                 }
             }
